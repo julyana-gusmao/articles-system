@@ -3,13 +3,14 @@ FROM node:18
 WORKDIR /app
 
 COPY package*.json ./
-
-RUN npm install
+RUN npm ci
 
 COPY . .
 
 RUN npm run build
 
-EXPOSE 3000
+RUN chmod +x /app/docker-entrypoint.sh
 
-CMD ["npm", "run", "start:prod"]
+EXPOSE 3000
+ENTRYPOINT ["sh", "/app/docker-entrypoint.sh"]
+CMD ["node", "dist/main.js"]

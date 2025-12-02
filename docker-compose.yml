@@ -1,29 +1,32 @@
-version: '3.9'
-
 services:
   db:
     image: postgres:15
-    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: articles
-    ports:
-      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
   app:
     build: .
-    container_name: articles_api
-    ports:
-      - "3000:3000"
-    command: npm run start:dev
-    volumes:
-      - .:/app
-      - /app/node_modules
     depends_on:
       - db
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_NAME: articles
+      JWT_SECRET: supersecret
+      JWT_EXPIRES: 1d
+      ROOT_EMAIL: root@example.com
+      ROOT_PASS: 123456
+    ports:
+      - "3000:3000"
+    command: ["node", "dist/main.js"]
 
 volumes:
   pgdata:
