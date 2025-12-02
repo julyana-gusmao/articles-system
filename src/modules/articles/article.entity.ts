@@ -12,21 +12,21 @@ import { User } from '../users/user.entity';
 @Entity('articles')
 export class Article {
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    id!: string;
 
     @Column()
-    title: string;
+    title!: string;
 
     @Column('text')
-    content: string;
+    content!: string;
 
     @ManyToOne(() => User, { eager: true })
     @JoinColumn({ name: 'author_id' })
-    author: User;
+    author!: User;
 
     @CreateDateColumn({ name: 'created_at' })
-    createdAt: Date;
+    createdAt!: Date;
 
     @UpdateDateColumn({ name: 'updated_at' })
-    updatedAt: Date;
+    updatedAt!: Date;
 }

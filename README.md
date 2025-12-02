@@ -53,7 +53,7 @@ A aplicação ficará disponível em:
 
 API → http://localhost:3000
 
-Swagger → http://localhost:3000/api
+Swagger → http://localhost:3000/docs
 
 Durante a subida serão executados:
 
@@ -75,5 +75,5 @@ Permissões criadas:
 
 📚 Documentação da API (Swagger)
 
-Acesse: http://localhost:3000/api
+Acesse: http://localhost:3000/docs
 

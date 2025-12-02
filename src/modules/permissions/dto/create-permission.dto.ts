@@ -1,10 +1,14 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsString, MinLength } from 'class-validator';
 
 export class CreatePermissionDto {
+
+    @ApiProperty()
     @IsString()
     @MinLength(2)
-    name: string;
+    name!: string;
 
+    @ApiProperty()
     @IsString()
-    description: string;
+    description!: string;
 }

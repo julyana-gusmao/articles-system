@@ -10,18 +10,18 @@ import { Permission } from '../../modules/permissions/permission.entity';
 @Entity('users')
 export class User {
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    id!: string;
 
     @Column()
-    name: string;
+    name!: string;
 
     @Column({ unique: true })
-    email: string;
+    email!: string;
 
     @Column()
-    password: string;
+    password!: string;
 
     @ManyToOne(() => Permission)
     @JoinColumn({ name: 'permission_id' })
-    permission: Permission;
+    permission!: Permission;
 }

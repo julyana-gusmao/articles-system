@@ -16,25 +16,32 @@ import { GetUser } from '../../common/decorators/get-user.decorator';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
+@ApiTags('Users')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
     @Post()
     @Roles('admin')
+    @ApiOperation({ summary: 'Criar usuário' })
+    @ApiResponse({ status: 201, description: 'Usuário criado com sucesso.' })
     async create(@Body() dto: CreateUserDto) {
         return this.usersService.create(dto);
     }
 
     @Get()
     @Roles('admin')
+    @ApiOperation({ summary: 'Listar usuários' })
     async findAll() {
         return this.usersService.findAll();
     }
 
     @Get(':id')
+    @ApiOperation({ summary: 'Buscar usuário por ID' })
     async findOne(@Param('id') id: string, @GetUser() user: any) {
         const userId = user.sub || user.id;
 
@@ -50,6 +57,7 @@ export class UsersController {
 
 
     @Patch(':id')
+    @ApiOperation({ summary: 'Editar usuário' })
     async update(@Param('id') id: string, @Body() dto: UpdateUserDto, @GetUser() user: any) {
         if (user.role === 'admin') return this.usersService.update(id, dto);
         if (user.sub === id || user.id === id) {
@@ -64,11 +72,13 @@ export class UsersController {
 
     @Delete(':id')
     @Roles('admin')
+    @ApiOperation({ summary: 'Excluir usuário' })
     async remove(@Param('id') id: string) {
         return this.usersService.remove(id);
     }
 
     @Get('me/profile')
+    @ApiOperation({ summary: 'Buscar perfil do usuário logado' })
     async me(@GetUser() user: any) {
         const id = user.sub || user.id;
         return this.usersService.findOneById(id);
