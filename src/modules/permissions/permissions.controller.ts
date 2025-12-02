@@ -11,9 +11,9 @@ import {
 import { PermissionsService } from './permissions.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
-import { RolesGuard } from '../users/guards/roles.guard';
+import { RolesGuard } from '../../common/guards/roles.guard';
 import { AuthGuard } from '@nestjs/passport';
-import { Roles } from '../users/decorators/roles.decorator';
+import { Roles } from '../../common/decorators/roles.decorator';
 
 @Controller('permissions')
 @UseGuards(AuthGuard('jwt'), RolesGuard)

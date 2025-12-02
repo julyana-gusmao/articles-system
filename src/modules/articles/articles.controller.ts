@@ -12,9 +12,9 @@ import {
 import { ArticlesService } from './articles.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
-import { RolesGuard } from '../users/guards/roles.guard';
-import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
-import { Roles } from '../users/decorators/roles.decorator';
+import { RolesGuard } from '../../common/guards/roles.guard';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { Roles } from '../../common/decorators/roles.decorator';
 
 @Controller('articles')
 @UseGuards(JwtAuthGuard, RolesGuard)

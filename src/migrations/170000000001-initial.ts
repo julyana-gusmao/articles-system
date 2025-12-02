@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class Init1700000000000 implements MigrationInterface {
-    name = 'Init1700000000000'
+export class Init1700000000001 implements MigrationInterface {
+    name = 'Init1700000000001'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`);
@@ -37,19 +37,18 @@ export class Init1700000000000 implements MigrationInterface {
 
         // ----- articles -----
         await queryRunner.query(`
-            CREATE TABLE "articles" (
-                "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
-                "title" character varying NOT NULL,
-                "content" text NOT NULL,
-                "author_id" uuid,
-                CONSTRAINT "PK_articles_id" PRIMARY KEY ("id"),
-                CONSTRAINT "FK_articles_user" FOREIGN KEY ("author_id") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE
-            )
-        `);
-
-        await queryRunner.query(`
-            CREATE INDEX "IDX_articles_author" ON "articles" ("author_id");
-        `);
+      CREATE TABLE IF NOT EXISTS "articles" (
+        "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
+        "title" character varying NOT NULL,
+        "content" text NOT NULL,
+        "author_id" uuid,
+        "created_at" TIMESTAMP NOT NULL DEFAULT now(),
+        "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
+        CONSTRAINT "PK_articles_id" PRIMARY KEY ("id"),
+        CONSTRAINT "FK_articles_author" FOREIGN KEY ("author_id") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE
+      )
+    `);
+        await queryRunner.query(`CREATE INDEX IF NOT EXISTS "IDX_articles_author" ON "articles" ("author_id")`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
