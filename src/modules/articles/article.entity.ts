@@ -4,8 +4,10 @@ import {
     Column,
     ManyToOne,
     JoinColumn,
+    CreateDateColumn,
+    UpdateDateColumn,
 } from 'typeorm';
-import { User } from '../../modules/users/user.entity';
+import { User } from '../users/user.entity';
 
 @Entity('articles')
 export class Article {
@@ -18,7 +20,13 @@ export class Article {
     @Column('text')
     content: string;
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, { eager: true })
     @JoinColumn({ name: 'author_id' })
     author: User;
+
+    @CreateDateColumn({ name: 'created_at' })
+    createdAt: Date;
+
+    @UpdateDateColumn({ name: 'updated_at' })
+    updatedAt: Date;
 }
