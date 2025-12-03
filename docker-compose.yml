@@ -11,7 +11,8 @@ services:
       - "5432:5432"
 
   app:
-    build: .
+    build:
+      context: .
     depends_on:
       - db
     environment:
@@ -21,12 +22,11 @@ services:
       DATABASE_PASSWORD: postgres
       DATABASE_NAME: articles
       JWT_SECRET: supersecret
-      JWT_EXPIRES: 1d
+      JWT_EXPIRES: "1d"
       ROOT_EMAIL: root@example.com
-      ROOT_PASS: 123456
+      ROOT_PASS: "123456"
     ports:
       - "3000:3000"
-    command: ["node", "dist/main.js"]
 
 volumes:
   pgdata:

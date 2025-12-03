@@ -1,14 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
-echo "Waiting for DB..."
+echo "Wait DB..."
 sleep 3
 
-echo "Running migrations..."
-npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d src/datasource.ts
+echo "Run migrations..."
+node node_modules/typeorm/cli.js migration:run -d dist/typeorm.config.js
 
-echo "Running seed..."
-npx ts-node -r tsconfig-paths/register src/seeds/seed.ts
+echo "Run seed..."
+node dist/seeds/seed.js
 
-echo "Starting app..."
-exec "$@"
+echo "Start app..."
+node dist/main.js

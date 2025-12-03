@@ -1,4 +1,4 @@
-import ds from '../../src/datasource';
+import ds from '../datasource';
 import { Permission } from '../modules/permissions/permission.entity';
 import { User } from '../modules/users/user.entity';
 import * as bcrypt from 'bcryptjs';
